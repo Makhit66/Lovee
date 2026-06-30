@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>รักเค้ามั้ย?</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('IMG_6584 (1).PNG') center center / cover no-repeat;
+            font-family: sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 24px;
+        }
+
+        h1 {
+            color: #c9184a;
+            margin-bottom: 24px;
+            font-size: 2rem;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        h1 img {
+            max-width: 220px;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 20px;
+            display: block;
+        }
+
+        .button-area {
+            position: relative;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        #yesBtn {
+            background: linear-gradient(to right, #ff4d6d, #c9184a);
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #yesBtn img {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+
+        #noBtn {
+            background: white;
+            color: #ff4d6d;
+            padding: 15px 30px;
+            font-size: 16px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="question">รักเค้ามั้ย? 🤔</h1>
+        <div class="button-area">
+            <button id="yesBtn" onclick="confirmLove()">รัก</button>
+            <button id="noBtn" type="button">รักมั้ย</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const question = document.getElementById('question');
+
+        let scale = 1;
+        let hoverCount = 0;
+        let currentImage = '';
+        const messages = [
+            "รักมั้ย",
+            "แน่ใจนะ?",
+            "คิดดีๆ นะ",
+            "ใจร้ายอ่ะ",
+            "งือออ 😭",
+            "ให้คิดอีกที",
+            "จะกดได้ไงอ่ะ 🙃",
+            "ขอโอกาสนะ",
+            "อย่าทำงี้สิ",
+            "เจ็บนะเนี่ย 💔",
+            "งอนละนะ",
+            "กดรักดิ๊",
+            "ดื้อจังเลย",
+            "สงสารเค้าบ้าง",
+            "ครั้งสุดท้ายละนะ",
+            "ตื้อสุดๆ แล้ว 😤",
+            "ใจแข็งจัง",
+            "ขอร้องงงง 🥺",
+            "จนมุมแล้วน้า",
+            "เลือกรักได้แล้ว!"
+        ];
+        const imageFiles = [
+            "2b8aff254ca241cc98c7a097383e3009.jpg",
+            "4632c0aa24b66f656773dd4b5d92fd44.jpg",
+            "4632c0aa24b66f656773dd4b5d92fd44 (1).jpg",
+            "7d4efdf9d0728c1aec67431cdd355e5b.jpg",
+            "b11f8abe742b54244565c497640a981c.jpg",
+            "64f964cd5f906db8e3c6928ba5982f97.jpg",
+            "695b5d21d7b3177a2d26fccbb5b46b54.jpg",
+            "e447a974e131db78410b21eff004c288.jpg"
+        ];
+        let msgIndex = 0;
+
+        noBtn.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - 180);
+            const y = Math.random() * (window.innerHeight - 120);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+
+            msgIndex = Math.floor(Math.random() * messages.length);
+            noBtn.innerText = messages[msgIndex];
+
+            const randomImage = imageFiles[Math.floor(Math.random() * imageFiles.length)];
+            currentImage = randomImage;
+            hoverCount += 1;
+            question.innerHTML = `<img src="${randomImage}" alt="random cute image" />`;
+
+            scale += 0.15;
+            yesBtn.style.transform = `scale(${scale})`;
+            const lift = Math.min(40, 18 + (scale - 1) * 15);
+            question.style.transform = `translateY(-${lift}px)`;
+        });
+
+        function confirmLove() {
+            const summary = hoverCount > 0
+                ? ` (ทำไมใช้ตั้ง${hoverCount} ครั้งถึงจะกดรักเค้า)`
+                : '';
+            question.innerHTML = `รักแล้ววววว 🥰<br><small style="font-size:0.8rem;color:#660517;">${summary}</small>`;
+            noBtn.style.display = "none";
+            yesBtn.innerHTML = '<img src="07de860772e57d7a22dd7c41c7c8b4fb.jpg" alt="love" />';
+            const lift = Math.min(60, 18 + (scale - 1) * 15);
+            question.style.transform = `translateY(-${lift}px)`;
+            question.style.transition = 'transform 0.4s ease';
+        }
+    </script>
+</body>
+
+</html>
